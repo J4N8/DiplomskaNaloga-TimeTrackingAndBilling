@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: localhost
+    port: 5432
+    database: diplomska_naloga
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update # change to create-drop in development, none in production
+    show-sql: true # only for development, not recommended in production

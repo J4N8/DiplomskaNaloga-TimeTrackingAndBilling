@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DiplomskaNalogaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <module name="DiplomskaNaloga" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="me.j4n8.diplomskanaloga.DiplomskaNalogaApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
