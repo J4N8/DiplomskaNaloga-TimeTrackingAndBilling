@@ -11,3 +11,6 @@ spring:
     hibernate:
       ddl-auto: update # change to create-drop in development, none in production
     show-sql: true # only for development, not recommended in production
+  devtools:
+    restart:
+      log-condition-evaluation-delta: false
