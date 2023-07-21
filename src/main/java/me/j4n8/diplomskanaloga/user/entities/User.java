@@ -1,4 +1,4 @@
-package me.j4n8.diplomskanaloga.entities;
+package me.j4n8.diplomskanaloga.user.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

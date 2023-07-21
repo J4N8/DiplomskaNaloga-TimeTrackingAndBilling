@@ -1,4 +1,4 @@
-package me.j4n8.diplomskanaloga.entities;
+package me.j4n8.diplomskanaloga.project.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "projects")
+public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)

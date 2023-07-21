@@ -2,9 +2,7 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: localhost
-    port: 5432
-    database: diplomska_naloga
+    url: jdbc:postgresql://localhost:5432/diplomska_naloga
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver

@@ -1,4 +1,4 @@
-package me.j4n8.diplomskanaloga.entities;
+package me.j4n8.diplomskanaloga.time_tracking.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
