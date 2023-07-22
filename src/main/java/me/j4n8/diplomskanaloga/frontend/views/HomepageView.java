@@ -8,8 +8,8 @@ import me.j4n8.diplomskanaloga.frontend.components.MainLayout;
 
 @Route(value = "", layout = MainLayout.class)
 @AnonymousAllowed
-public class MainView extends VerticalLayout {
-	public MainView(){
+public class HomepageView extends VerticalLayout {
+	public HomepageView(){
 		setSizeFull();
 		setAlignItems(Alignment.CENTER);
 		setJustifyContentMode(JustifyContentMode.CENTER);
