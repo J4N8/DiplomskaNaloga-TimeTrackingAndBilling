@@ -10,7 +10,7 @@ import java.time.Duration;
 @Setter
 @Entity
 @Table(name = "time_trackings")
-public class TimeTracking {
+public class TimeTrackingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id", nullable = false)
