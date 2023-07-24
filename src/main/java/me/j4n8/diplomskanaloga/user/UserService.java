@@ -16,10 +16,7 @@ public class UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
-	public UserEntity registerUser(String email, String password, String confirmPassword, String username) {
-		if (!password.equals(confirmPassword)) {
-			throw new IllegalArgumentException("Passwords do not match");
-		}
+	public UserEntity registerUser(String email, String password, String username) {
 		UserEntity newUser = new UserEntity(null, username, email, passwordEncoder.encode(password));
 		return userRepository.save(newUser);
 	}
