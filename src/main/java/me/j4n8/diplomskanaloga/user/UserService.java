@@ -1,0 +1,26 @@
+package me.j4n8.diplomskanaloga.user;
+
+import me.j4n8.diplomskanaloga.user.entities.UserEntity;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+	UserRepository userRepository;
+	@Lazy
+	private PasswordEncoder passwordEncoder;
+	
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
+	
+	public UserEntity registerUser(String email, String password, String confirmPassword, String username) {
+		if (!password.equals(confirmPassword)) {
+			throw new IllegalArgumentException("Passwords do not match");
+		}
+		UserEntity newUser = new UserEntity(null, username, email, passwordEncoder.encode(password));
+		return userRepository.save(newUser);
+	}
+}

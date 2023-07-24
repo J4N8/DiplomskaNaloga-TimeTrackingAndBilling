@@ -6,6 +6,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route(value = "login")
@@ -19,8 +20,10 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 		setJustifyContentMode(JustifyContentMode.CENTER);
 		
 		loginForm.setAction("login");
+		loginForm.setForgotPasswordButtonVisible(false);
 		
 		add(new H1("Time tracking and billing app"), loginForm);
+		add(new RouterLink("register", RegisterView.class));
 	}
 	
 	@Override
