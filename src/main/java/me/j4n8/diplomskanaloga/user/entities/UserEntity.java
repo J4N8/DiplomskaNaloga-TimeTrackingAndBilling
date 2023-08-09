@@ -26,4 +26,8 @@ public class UserEntity {
 	
 	@Column(name = "password", nullable = false)
 	private String password;
+	
+	// Link to tasks
+	@OneToMany(mappedBy = "user")
+	private java.util.List<me.j4n8.diplomskanaloga.task.entities.TaskEntity> tasks;
 }

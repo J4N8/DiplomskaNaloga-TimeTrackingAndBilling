@@ -17,7 +17,7 @@ public class UserService {
 	}
 	
 	public UserEntity registerUser(String email, String password, String username) {
-		UserEntity newUser = new UserEntity(null, username, email, passwordEncoder.encode(password));
+		UserEntity newUser = new UserEntity(null, username, email, passwordEncoder.encode(password), null);
 		return userRepository.save(newUser);
 	}
 }
