@@ -1,4 +1,4 @@
-package me.j4n8.diplomskanaloga.frontend.components;
+package me.j4n8.diplomskanaloga.frontend.components.register;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
