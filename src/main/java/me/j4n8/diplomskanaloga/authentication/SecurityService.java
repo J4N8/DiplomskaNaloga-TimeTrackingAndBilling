@@ -1,7 +1,7 @@
 package me.j4n8.diplomskanaloga.authentication;
 
 import com.vaadin.flow.spring.security.AuthenticationContext;
-import org.springframework.security.core.userdetails.UserDetails;
+import me.j4n8.diplomskanaloga.user.entities.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,8 +12,8 @@ public class SecurityService {
 		this.authenticationContext = authenticationContext;
 	}
 	
-	public UserDetails getAuthenticatedUser() {
-		return authenticationContext.getAuthenticatedUser(UserDetails.class).get();
+	public UserEntity getAuthenticatedUser() {
+		return authenticationContext.getAuthenticatedUser(UserEntity.class).get();
 	}
 	
 	public void logout() {
