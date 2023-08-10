@@ -20,7 +20,7 @@ public class TaskComponent extends VerticalLayout {
 	public TaskComponent(TaskService taskService, TaskEntity task) {
 		this.taskService = taskService;
 		this.task = task;
-		title = new H1(task.getName());
+		title = new H1(task.getTitle());
 		description = new Paragraph(task.getDescription());
 		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		
@@ -34,7 +34,7 @@ public class TaskComponent extends VerticalLayout {
 	
 	public void update(TaskEntity task) {
 		this.task = task;
-		title.setText(task.getName());
+		title.setText(task.getTitle());
 		description.setText(task.getDescription());
 		completedCheckbox.setValue(task.isCompleted());
 	}

@@ -46,7 +46,10 @@ public class RegisterForm extends VerticalLayout {
 		
 		add(title, username, email, password, confirmPassword, registerButton);
 		
-		// Validation
+		validation();
+	}
+	
+	private void validation() {
 		binder = new Binder<>(UserEntity.class);
 		binder.forField(username)
 				.asRequired("Username is required")
