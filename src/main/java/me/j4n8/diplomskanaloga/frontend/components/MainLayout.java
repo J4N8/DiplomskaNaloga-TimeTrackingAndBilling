@@ -3,26 +3,31 @@ package me.j4n8.diplomskanaloga.frontend.components;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import me.j4n8.diplomskanaloga.authentication.SecurityService;
+import me.j4n8.diplomskanaloga.frontend.components.tasks.TaskFormDialog;
+import me.j4n8.diplomskanaloga.frontend.enums.FormType;
 import me.j4n8.diplomskanaloga.frontend.views.AllTasksView;
 import me.j4n8.diplomskanaloga.frontend.views.HomepageView;
+import me.j4n8.diplomskanaloga.task.TaskService;
 
 public class MainLayout extends AppLayout {
 	private final SecurityService securityService;
-	public MainLayout(SecurityService securityService) {
+	private TaskService taskService;
+	
+	public MainLayout(SecurityService securityService, TaskService taskService) {
 		this.securityService = securityService;
+		this.taskService = taskService;
 		createHeader();
 		createDrawer();
 	}
 	
 	private void createHeader() {
-		H1 logo = new H1("Time tracking and billing app");
+		RouterLink logo = new RouterLink("Time tracking and billing app", HomepageView.class);
 		logo.addClassNames(
 				LumoUtility.FontSize.LARGE,
 				LumoUtility.Margin.MEDIUM);
@@ -44,8 +49,11 @@ public class MainLayout extends AppLayout {
 	
 	private void createDrawer() {
 		addToDrawer(new VerticalLayout(
-				new RouterLink("Home", HomepageView.class),
-				new RouterLink("All tasks", AllTasksView.class)
+				new RouterLink("All tasks", AllTasksView.class),
+				new Button("New task", e -> {
+					TaskFormDialog taskFormDialog = new TaskFormDialog(taskService, FormType.CREATE);
+					taskFormDialog.open();
+				})
 		));
 	}
 }

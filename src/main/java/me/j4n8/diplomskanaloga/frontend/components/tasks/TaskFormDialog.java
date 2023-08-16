@@ -7,29 +7,34 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.spring.annotation.SpringComponent;
+import com.vaadin.flow.theme.lumo.LumoUtility;
+import me.j4n8.diplomskanaloga.frontend.enums.FormType;
 import me.j4n8.diplomskanaloga.task.TaskService;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 
-@SpringComponent
 public class TaskFormDialog extends Dialog {
+	private Button deleteButton;
+	private Button editButton;
 	private TaskService taskService;
 	private TaskEntity task = new TaskEntity();
 	private TextField title;
 	private TextArea description;
 	private Button createButton;
 	private Button clearButton;
+	private Div buttonsDiv;
 	private Binder<TaskEntity> binder;
+	private FormType formType;
 	
-	public TaskFormDialog(TaskService taskService) {
+	public TaskFormDialog(TaskService taskService, FormType formType) {
 		this.taskService = taskService;
+		this.formType = formType;
 		
 		title = new TextField("Title");
 		description = new TextArea("Description");
 		
 		createButton = new Button("Create");
 		createButton.addClickListener(event -> {
-			save();
+			create();
 		});
 		
 		clearButton = new Button("Clear");
@@ -37,17 +42,45 @@ public class TaskFormDialog extends Dialog {
 			clear();
 		});
 		
-		Div buttonsDiv = new Div(clearButton, createButton);
+		editButton = new Button("Edit");
+		editButton.addClickListener(event -> {
+			create();
+		});
 		
-		add(title, description, buttonsDiv);
+		deleteButton = new Button("Delete");
+		deleteButton.addClickListener(event -> {
+			delete();
+		});
+		
+		buttonsDiv = generateButtons();
+		
+		setHeaderTitle("New task");
+		add(title, description);
+		getFooter().add(buttonsDiv);
+		
 		
 		validation();
 		applyStyles();
 	}
 	
+	private Div generateButtons() {
+		Div div = new Div();
+		if (formType == FormType.CREATE) {
+			div.add(createButton, clearButton);
+		} else if (formType == FormType.EDIT) {
+			div.add(editButton, deleteButton);
+		}
+		
+		return div;
+	}
+	
 	private void applyStyles() {
 		setModal(true);
 		addClassNames();
+		
+		buttonsDiv.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Flex.AUTO, LumoUtility.Gap.SMALL);
+		title.setWidthFull();
+		description.setWidthFull();
 	}
 	
 	private void validation() {
@@ -63,7 +96,7 @@ public class TaskFormDialog extends Dialog {
 		binder.readBean(task);
 	}
 	
-	public void save() {
+	public void create() {
 		try {
 			binder.writeBean(task);
 			taskService.save(task);
@@ -74,8 +107,25 @@ public class TaskFormDialog extends Dialog {
 		}
 	}
 	
+	public void update() {
+		try {
+			binder.writeBean(task);
+			taskService.save(task);
+			this.close();
+			new Notification("Task updated successfully", 5 * 1000).open();
+		} catch (Exception e) {
+			new Notification(e.getMessage(), 5 * 1000).open();
+		}
+	}
+	
 	public void delete() {
-		taskService.delete(task);
+		try {
+			taskService.delete(task);
+			this.close();
+			new Notification("Task deleted successfully", 5 * 1000).open();
+		} catch (Exception e) {
+			new Notification(e.getMessage(), 5 * 1000).open();
+		}
 	}
 	
 	public void clear() {

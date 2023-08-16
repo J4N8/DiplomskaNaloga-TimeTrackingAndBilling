@@ -5,6 +5,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 import me.j4n8.diplomskanaloga.frontend.components.tasks.TaskFormDialog;
+import me.j4n8.diplomskanaloga.frontend.enums.FormType;
 import me.j4n8.diplomskanaloga.task.TaskService;
 
 @Route(value = "tasks/new")
@@ -23,7 +24,7 @@ public class NewTaskView extends VerticalLayout {
 		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		
 		title = new H1("New task");
-		taskFormDialog = new TaskFormDialog(this.taskService);
+		taskFormDialog = new TaskFormDialog(this.taskService, FormType.CREATE);
 		
 		add(title, taskFormDialog);
 	}
