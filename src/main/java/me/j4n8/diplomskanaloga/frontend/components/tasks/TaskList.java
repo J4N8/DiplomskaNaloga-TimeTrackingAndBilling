@@ -10,7 +10,7 @@ public class TaskList extends HorizontalLayout {
 	private TaskService taskService;
 	public TaskList(TaskService taskService, List<TaskEntity> tasks) {
 		this.taskService = taskService;
-		tasks.forEach(task -> add(new TaskComponent(taskService, task)));
+		tasks.forEach(task -> addTask(task));
 	}
 	
 	/***

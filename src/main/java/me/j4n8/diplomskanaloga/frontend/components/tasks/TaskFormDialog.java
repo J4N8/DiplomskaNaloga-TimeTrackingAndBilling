@@ -1,9 +1,9 @@
 package me.j4n8.diplomskanaloga.frontend.components.tasks;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -12,7 +12,7 @@ import me.j4n8.diplomskanaloga.task.TaskService;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 
 @SpringComponent
-public class TaskForm extends VerticalLayout {
+public class TaskFormDialog extends Dialog {
 	private TaskService taskService;
 	private TaskEntity task = new TaskEntity();
 	private TextField title;
@@ -21,11 +21,8 @@ public class TaskForm extends VerticalLayout {
 	private Button clearButton;
 	private Binder<TaskEntity> binder;
 	
-	public TaskForm(TaskService taskService) {
+	public TaskFormDialog(TaskService taskService) {
 		this.taskService = taskService;
-		
-		setAlignItems(Alignment.CENTER);
-		setJustifyContentMode(JustifyContentMode.CENTER);
 		
 		title = new TextField("Title");
 		description = new TextArea("Description");
@@ -45,6 +42,12 @@ public class TaskForm extends VerticalLayout {
 		add(title, description, buttonsDiv);
 		
 		validation();
+		applyStyles();
+	}
+	
+	private void applyStyles() {
+		setModal(true);
+		addClassNames();
 	}
 	
 	private void validation() {

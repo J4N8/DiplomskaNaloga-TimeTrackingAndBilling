@@ -7,8 +7,11 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import me.j4n8.diplomskanaloga.authentication.SecurityService;
+import me.j4n8.diplomskanaloga.frontend.views.AllTasksView;
+import me.j4n8.diplomskanaloga.frontend.views.HomepageView;
 
 public class MainLayout extends AppLayout {
 	private final SecurityService securityService;
@@ -41,7 +44,8 @@ public class MainLayout extends AppLayout {
 	
 	private void createDrawer() {
 		addToDrawer(new VerticalLayout(
-//				new RouterLink("List", ListView.class)
+				new RouterLink("Home", HomepageView.class),
+				new RouterLink("All tasks", AllTasksView.class)
 		));
 	}
 }

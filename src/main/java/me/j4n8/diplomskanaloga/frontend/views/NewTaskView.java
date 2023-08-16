@@ -4,7 +4,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
-import me.j4n8.diplomskanaloga.frontend.components.tasks.TaskForm;
+import me.j4n8.diplomskanaloga.frontend.components.tasks.TaskFormDialog;
 import me.j4n8.diplomskanaloga.task.TaskService;
 
 @Route(value = "tasks/new")
@@ -12,7 +12,7 @@ import me.j4n8.diplomskanaloga.task.TaskService;
 public class NewTaskView extends VerticalLayout {
 	private TaskService taskService;
 	private H1 title;
-	private TaskForm taskForm;
+	private TaskFormDialog taskFormDialog;
 	
 	public NewTaskView(TaskService taskService) {
 		this.taskService = taskService;
@@ -23,8 +23,8 @@ public class NewTaskView extends VerticalLayout {
 		setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 		
 		title = new H1("New task");
-		taskForm = new TaskForm(this.taskService);
+		taskFormDialog = new TaskFormDialog(this.taskService);
 		
-		add(title, taskForm);
+		add(title, taskFormDialog);
 	}
 }
