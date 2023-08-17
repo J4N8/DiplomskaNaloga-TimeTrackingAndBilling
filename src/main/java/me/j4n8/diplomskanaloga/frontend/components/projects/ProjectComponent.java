@@ -19,7 +19,6 @@ public class ProjectComponent extends VerticalLayout {
 	private H2 name;
 	private Paragraph description;
 	private Button editButton;
-	private Button selectButton;
 	private Div buttonsDiv;
 	
 	public ProjectComponent(ProjectService projectService, ProjectEntity project) {
@@ -36,12 +35,12 @@ public class ProjectComponent extends VerticalLayout {
 			projectFormDialog.open();
 		});
 		
-		selectButton = new Button("Select");
-		selectButton.addClickListener(event -> {
+		// TODO: make mouse cursor change to hand when hovering over the component
+		addDoubleClickListener(event -> {
 			UI.getCurrent().navigate("project/" + project.getId());
 		});
 		
-		buttonsDiv.add(selectButton, editButton);
+		buttonsDiv.add(editButton);
 		add(name, description, buttonsDiv);
 		
 		applyStyles();
