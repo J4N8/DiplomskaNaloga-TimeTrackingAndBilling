@@ -3,7 +3,7 @@ package me.j4n8.diplomskanaloga.frontend.components.tasks;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -16,7 +16,7 @@ public class TaskComponent extends VerticalLayout {
 	private TaskService taskService;
 	@Getter
 	private TaskEntity task;
-	private H1 title;
+	private H2 title;
 	private Paragraph description;
 	private Checkbox completedCheckbox;
 	private Div buttonsDiv;
@@ -25,13 +25,14 @@ public class TaskComponent extends VerticalLayout {
 	public TaskComponent(TaskService taskService, TaskEntity task) {
 		this.taskService = taskService;
 		this.task = task;
-		title = new H1(task.getTitle());
+		title = new H2(task.getTitle());
 		description = new Paragraph(task.getDescription());
 		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		
 		completedCheckbox.addValueChangeListener(event -> {
 			this.task.setCompleted(event.getValue());
 			taskService.save(this.task);
+			applyStyles();
 		});
 		
 		buttonsDiv = new Div();
@@ -49,7 +50,11 @@ public class TaskComponent extends VerticalLayout {
 	}
 	
 	private void applyStyles() {
+		setClassName(null);
 		addClassName(LumoUtility.Border.ALL);
+		
+		// Color the task component based on the completion status
+		addClassName(task.isCompleted() ? LumoUtility.Background.SUCCESS_10 : LumoUtility.Background.ERROR_10);
 	}
 	
 	public void update(TaskEntity task) {
