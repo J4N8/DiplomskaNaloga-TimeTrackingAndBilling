@@ -33,4 +33,9 @@ public class TaskList extends HorizontalLayout {
 			}
 		});
 	}
+	
+	public void setTasks(List<TaskEntity> tasks) {
+		removeAll();
+		tasks.forEach(task -> addTask(task));
+	}
 }

@@ -50,4 +50,8 @@ public class ProjectService {
 	public List<ProjectEntity> findAll() {
 		return projectRepository.findByUser_Id(securityService.getAuthenticatedUser().getId());
 	}
+	
+	public ProjectEntity findById(Long id) {
+		return projectRepository.findById(id).orElse(null);
+	}
 }

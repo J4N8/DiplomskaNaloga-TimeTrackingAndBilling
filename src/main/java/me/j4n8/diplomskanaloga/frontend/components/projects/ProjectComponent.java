@@ -1,5 +1,6 @@
 package me.j4n8.diplomskanaloga.frontend.components.projects;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
@@ -18,6 +19,7 @@ public class ProjectComponent extends VerticalLayout {
 	private H2 name;
 	private Paragraph description;
 	private Button editButton;
+	private Button selectButton;
 	private Div buttonsDiv;
 	
 	public ProjectComponent(ProjectService projectService, ProjectEntity project) {
@@ -34,7 +36,12 @@ public class ProjectComponent extends VerticalLayout {
 			projectFormDialog.open();
 		});
 		
-		buttonsDiv.add(editButton);
+		selectButton = new Button("Select");
+		selectButton.addClickListener(event -> {
+			UI.getCurrent().navigate("project/" + project.getId());
+		});
+		
+		buttonsDiv.add(selectButton, editButton);
 		add(name, description, buttonsDiv);
 		
 		applyStyles();

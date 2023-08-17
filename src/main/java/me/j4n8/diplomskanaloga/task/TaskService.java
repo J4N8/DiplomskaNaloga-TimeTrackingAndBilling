@@ -1,6 +1,7 @@
 package me.j4n8.diplomskanaloga.task;
 
 import me.j4n8.diplomskanaloga.authentication.SecurityService;
+import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 import me.j4n8.diplomskanaloga.user.entities.UserEntity;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,9 @@ public class TaskService {
 	 * @param description Description of task
 	 * @return Created task
 	 */
-	public TaskEntity createTask(String title, String description) {
+	public TaskEntity createTask(String title, String description, ProjectEntity projectEntity) {
 		UserEntity authenticatedUser = securityService.getAuthenticatedUser();
-		TaskEntity newTask = new TaskEntity(null, title, description, false, authenticatedUser);
+		TaskEntity newTask = new TaskEntity(null, title, description, false, authenticatedUser, projectEntity);
 		return taskRepository.save(newTask);
 	}
 	
@@ -54,5 +55,9 @@ public class TaskService {
 	 */
 	public void delete(TaskEntity task) {
 		taskRepository.delete(task);
+	}
+	
+	public List<TaskEntity> findAllByProject(ProjectEntity projectEntity) {
+		return taskRepository.findByProject_Id(projectEntity.getId());
 	}
 }

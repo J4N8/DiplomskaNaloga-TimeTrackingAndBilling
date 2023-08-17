@@ -38,7 +38,7 @@ public class TaskComponent extends VerticalLayout {
 		buttonsDiv = new Div();
 		editButton = new Button("Edit");
 		editButton.addClickListener(event -> {
-			TaskFormDialog taskFormDialog = new TaskFormDialog(taskService, FormType.EDIT);
+			TaskFormDialog taskFormDialog = new TaskFormDialog(taskService, FormType.EDIT, null);
 			taskFormDialog.setTask(this.task);
 			taskFormDialog.open();
 		});

@@ -9,10 +9,12 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import me.j4n8.diplomskanaloga.frontend.enums.FormType;
+import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 import me.j4n8.diplomskanaloga.task.TaskService;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 
 public class TaskFormDialog extends Dialog {
+	private ProjectEntity projectEntity;
 	private Button deleteButton;
 	private Button editButton;
 	private TaskService taskService;
@@ -25,9 +27,10 @@ public class TaskFormDialog extends Dialog {
 	private Binder<TaskEntity> binder;
 	private FormType formType;
 	
-	public TaskFormDialog(TaskService taskService, FormType formType) {
+	public TaskFormDialog(TaskService taskService, FormType formType, ProjectEntity projectEntity) {
 		this.taskService = taskService;
 		this.formType = formType;
+		this.projectEntity = projectEntity;
 		
 		title = new TextField("Title");
 		description = new TextArea("Description");
@@ -103,6 +106,7 @@ public class TaskFormDialog extends Dialog {
 	
 	public void create() {
 		try {
+			task.setProject(projectEntity);
 			binder.writeBean(task);
 			taskService.save(task);
 			clear();

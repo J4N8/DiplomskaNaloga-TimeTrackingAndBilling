@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 import me.j4n8.diplomskanaloga.user.entities.UserEntity;
 
 @NoArgsConstructor
@@ -32,4 +33,9 @@ public class TaskEntity {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private UserEntity user;
+	
+	// Link to project
+	@ManyToOne
+	@JoinColumn(name = "project_id", nullable = false)
+	private ProjectEntity project;
 }

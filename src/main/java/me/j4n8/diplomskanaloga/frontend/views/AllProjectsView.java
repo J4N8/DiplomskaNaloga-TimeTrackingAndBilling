@@ -15,14 +15,14 @@ import me.j4n8.diplomskanaloga.project.ProjectService;
 
 @Route(value = "projects", layout = MainLayout.class)
 @PermitAll
-public class ProjectsView extends VerticalLayout {
+public class AllProjectsView extends VerticalLayout {
 	private ProjectService projectService;
 	private H1 title;
 	private ProjectList projectList;
 	private Button newProjectButton;
 	private Div div;
 	
-	public ProjectsView(ProjectService projectService) {
+	public AllProjectsView(ProjectService projectService) {
 		this.projectService = projectService;
 		addClassName("projects-view");
 		setSizeFull();

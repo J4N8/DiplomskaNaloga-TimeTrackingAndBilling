@@ -9,9 +9,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import me.j4n8.diplomskanaloga.authentication.SecurityService;
+import me.j4n8.diplomskanaloga.frontend.views.AllProjectsView;
 import me.j4n8.diplomskanaloga.frontend.views.AllTasksView;
 import me.j4n8.diplomskanaloga.frontend.views.HomepageView;
-import me.j4n8.diplomskanaloga.frontend.views.ProjectsView;
 import me.j4n8.diplomskanaloga.task.TaskService;
 
 public class MainLayout extends AppLayout {
@@ -49,7 +49,7 @@ public class MainLayout extends AppLayout {
 	private void createDrawer() {
 		addToDrawer(new VerticalLayout(
 				new RouterLink("All tasks", AllTasksView.class),
-				new RouterLink("Projects", ProjectsView.class)
+				new RouterLink("Projects", AllProjectsView.class)
 		));
 	}
 }

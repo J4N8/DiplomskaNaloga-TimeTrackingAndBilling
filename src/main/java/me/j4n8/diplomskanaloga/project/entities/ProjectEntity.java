@@ -5,7 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 import me.j4n8.diplomskanaloga.user.entities.UserEntity;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,4 +31,7 @@ public class ProjectEntity {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private UserEntity user;
+	
+	@OneToMany(mappedBy = "project")
+	private List<TaskEntity> tasks;
 }
