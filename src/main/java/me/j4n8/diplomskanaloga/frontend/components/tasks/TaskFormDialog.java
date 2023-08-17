@@ -17,7 +17,7 @@ public class TaskFormDialog extends Dialog {
 	private ProjectEntity projectEntity;
 	private Button deleteButton;
 	private Button editButton;
-	private TaskService taskService;
+	private final TaskService taskService;
 	private TaskEntity task = new TaskEntity();
 	private TextField title;
 	private TextArea description;
@@ -25,7 +25,7 @@ public class TaskFormDialog extends Dialog {
 	private Button clearButton;
 	private Div buttonsDiv;
 	private Binder<TaskEntity> binder;
-	private FormType formType;
+	private final FormType formType;
 	
 	public TaskFormDialog(TaskService taskService, FormType formType, ProjectEntity projectEntity) {
 		this.taskService = taskService;

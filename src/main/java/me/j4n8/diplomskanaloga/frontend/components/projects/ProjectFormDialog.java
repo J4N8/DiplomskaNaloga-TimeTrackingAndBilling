@@ -15,7 +15,7 @@ import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 public class ProjectFormDialog extends Dialog {
 	private Button deleteButton;
 	private Button editButton;
-	private ProjectService projectService;
+	private final ProjectService projectService;
 	private ProjectEntity project = new ProjectEntity();
 	private TextField name;
 	private TextArea description;
@@ -23,7 +23,7 @@ public class ProjectFormDialog extends Dialog {
 	private Button clearButton;
 	private Div buttonsDiv;
 	private Binder<ProjectEntity> binder;
-	private FormType formType;
+	private final FormType formType;
 	
 	public ProjectFormDialog(ProjectService projectService, FormType formType) {
 		this.projectService = projectService;

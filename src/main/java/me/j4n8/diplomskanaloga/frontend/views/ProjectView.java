@@ -22,8 +22,8 @@ import java.util.List;
 @Route(value = "project", layout = MainLayout.class)
 @PermitAll
 public class ProjectView extends VerticalLayout implements HasUrlParameter<Long> {
-	private TaskService taskService;
-	private ProjectService projectService;
+	private final TaskService taskService;
+	private final ProjectService projectService;
 	private ProjectEntity projectEntity;
 	private H1 name;
 	private TaskList taskList;

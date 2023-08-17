@@ -9,7 +9,7 @@ import me.j4n8.diplomskanaloga.user.UserService;
 @Route(value = "register")
 @AnonymousAllowed
 public class RegisterView extends VerticalLayout {
-	private UserService userService;
+	private final UserService userService;
 	public RegisterView(UserService userService){
 		this.userService = userService;
 		RegisterForm registerForm = new RegisterForm(this.userService);

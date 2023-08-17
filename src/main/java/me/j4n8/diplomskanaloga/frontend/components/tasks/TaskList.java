@@ -7,7 +7,7 @@ import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 import java.util.List;
 
 public class TaskList extends HorizontalLayout {
-	private TaskService taskService;
+	private final TaskService taskService;
 	public TaskList(TaskService taskService, List<TaskEntity> tasks) {
 		this.taskService = taskService;
 		tasks.forEach(task -> addTask(task));

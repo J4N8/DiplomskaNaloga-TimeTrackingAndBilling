@@ -16,7 +16,7 @@ import me.j4n8.diplomskanaloga.project.ProjectService;
 @Route(value = "projects", layout = MainLayout.class)
 @PermitAll
 public class AllProjectsView extends VerticalLayout {
-	private ProjectService projectService;
+	private final ProjectService projectService;
 	private H1 title;
 	private ProjectList projectList;
 	private Button newProjectButton;

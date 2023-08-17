@@ -8,8 +8,8 @@ import java.util.List;
 
 @Service
 public class ProjectService {
-	private SecurityService securityService;
-	private ProjectRepository projectRepository;
+	private final SecurityService securityService;
+	private final ProjectRepository projectRepository;
 	
 	public ProjectService(SecurityService securityService, ProjectRepository projectRepository) {
 		this.securityService = securityService;

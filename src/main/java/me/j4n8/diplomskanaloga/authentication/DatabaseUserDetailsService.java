@@ -1,7 +1,6 @@
 package me.j4n8.diplomskanaloga.authentication;
 
 import me.j4n8.diplomskanaloga.user.UserRepository;
-import me.j4n8.diplomskanaloga.user.entities.UserEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,7 +17,6 @@ class DatabaseUserDetailsService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserEntity user = userRepository.findByUsername(username);
-    return user;
+    return userRepository.findByUsername(username);
   }
 }

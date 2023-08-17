@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityService {
-	private AuthenticationContext authenticationContext;
+	private final AuthenticationContext authenticationContext;
 	
 	public SecurityService(AuthenticationContext authenticationContext) {
 		this.authenticationContext = authenticationContext;

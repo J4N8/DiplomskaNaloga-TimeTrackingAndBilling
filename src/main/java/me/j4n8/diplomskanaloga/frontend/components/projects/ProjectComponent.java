@@ -13,7 +13,7 @@ import me.j4n8.diplomskanaloga.project.ProjectService;
 import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 
 public class ProjectComponent extends VerticalLayout {
-	private ProjectService projectService;
+	private final ProjectService projectService;
 	@Getter
 	private ProjectEntity project;
 	private H2 name;

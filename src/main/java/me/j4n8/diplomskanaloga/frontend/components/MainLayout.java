@@ -16,7 +16,7 @@ import me.j4n8.diplomskanaloga.task.TaskService;
 
 public class MainLayout extends AppLayout {
 	private final SecurityService securityService;
-	private TaskService taskService;
+	private final TaskService taskService;
 	
 	public MainLayout(SecurityService securityService, TaskService taskService) {
 		this.securityService = securityService;

@@ -12,7 +12,7 @@ import me.j4n8.diplomskanaloga.task.TaskService;
 @Route(value = "tasks", layout = MainLayout.class)
 @PermitAll
 public class AllTasksView extends VerticalLayout {
-	private TaskService taskService;
+	private final TaskService taskService;
 	private H1 title;
 	private TaskList taskList;
 	

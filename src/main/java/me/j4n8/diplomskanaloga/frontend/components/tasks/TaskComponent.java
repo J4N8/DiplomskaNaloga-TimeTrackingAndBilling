@@ -13,7 +13,7 @@ import me.j4n8.diplomskanaloga.task.TaskService;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 
 public class TaskComponent extends VerticalLayout {
-	private TaskService taskService;
+	private final TaskService taskService;
 	@Getter
 	private TaskEntity task;
 	private H2 title;

@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public class TaskService {
-	private TaskRepository taskRepository;
-	private SecurityService securityService;
+	private final TaskRepository taskRepository;
+	private final SecurityService securityService;
 	
 	public TaskService(TaskRepository taskRepository, SecurityService securityService) {
 		this.taskRepository = taskRepository;

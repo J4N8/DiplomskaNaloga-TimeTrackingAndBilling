@@ -7,7 +7,7 @@ import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 import java.util.List;
 
 public class ProjectList extends HorizontalLayout {
-	private ProjectService projectService;
+	private final ProjectService projectService;
 	
 	public ProjectList(ProjectService projectService, List<ProjectEntity> projects) {
 		this.projectService = projectService;

@@ -16,7 +16,7 @@ import me.j4n8.diplomskanaloga.user.entities.UserEntity;
 
 @SpringComponent
 public class RegisterForm extends VerticalLayout {
-	private UserService userService;
+	private final UserService userService;
 	
 	private UserEntity user = new UserEntity();
 	
