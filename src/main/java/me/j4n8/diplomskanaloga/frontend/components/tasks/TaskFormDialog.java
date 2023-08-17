@@ -54,7 +54,11 @@ public class TaskFormDialog extends Dialog {
 		
 		buttonsDiv = generateButtons();
 		
-		setHeaderTitle("New task");
+		if (formType == FormType.CREATE) {
+			setHeaderTitle("New task");
+		} else if (formType == FormType.EDIT) {
+			setHeaderTitle("Edit task");
+		}
 		add(title, description);
 		getFooter().add(buttonsDiv);
 		
@@ -93,6 +97,7 @@ public class TaskFormDialog extends Dialog {
 	}
 	
 	public void setTask(TaskEntity task) {
+		this.task = task;
 		binder.readBean(task);
 	}
 	

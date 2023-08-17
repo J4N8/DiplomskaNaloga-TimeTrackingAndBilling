@@ -27,8 +27,8 @@ public class TaskComponent extends VerticalLayout {
 		this.task = task;
 		title = new H2(task.getTitle());
 		description = new Paragraph(task.getDescription());
-		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		
+		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		completedCheckbox.addValueChangeListener(event -> {
 			this.task.setCompleted(event.getValue());
 			taskService.save(this.task);
