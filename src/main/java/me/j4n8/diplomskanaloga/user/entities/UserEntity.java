@@ -37,6 +37,10 @@ public class UserEntity implements UserDetails {
 	@OneToMany(mappedBy = "user")
 	private java.util.List<me.j4n8.diplomskanaloga.task.entities.TaskEntity> tasks;
 	
+	// Link to projects
+	@OneToMany(mappedBy = "user")
+	private java.util.List<me.j4n8.diplomskanaloga.project.entities.ProjectEntity> projects;
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return Collections.<GrantedAuthority>singletonList(new SimpleGrantedAuthority("User"));
