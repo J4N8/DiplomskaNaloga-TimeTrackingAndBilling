@@ -30,7 +30,9 @@ public class ProjectFormDialog extends Dialog {
 		this.formType = formType;
 		
 		name = new TextField("Name");
+		name.setMaxLength(50);
 		description = new TextArea("Description");
+		description.setMaxLength(255);
 		
 		createButton = new Button("Create");
 		createButton.addClickListener(event -> {

@@ -33,7 +33,9 @@ public class TaskFormDialog extends Dialog {
 		this.projectEntity = projectEntity;
 		
 		title = new TextField("Title");
+		title.setMaxLength(50);
 		description = new TextArea("Description");
+		description.setMaxLength(255);
 		
 		createButton = new Button("Create");
 		createButton.addClickListener(event -> {
