@@ -48,6 +48,8 @@ public class TaskList extends HorizontalLayout {
 	}
 	
 	private void applyStyles() {
+		setWidthFull();
+		tasksDiv.setWidthFull();
 		tasksDiv.addClassNames(LumoUtility.Display.FLEX, LumoUtility.FlexDirection.ROW, LumoUtility.FlexWrap.WRAP);
 		tasksDiv.addClassName(LumoUtility.Gap.MEDIUM);
 	}
