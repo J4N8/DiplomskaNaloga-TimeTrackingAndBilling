@@ -1,9 +1,10 @@
 package me.j4n8.diplomskanaloga.frontend.components.tasks;
 
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -16,18 +17,20 @@ public class TaskComponent extends VerticalLayout {
 	private final TaskService taskService;
 	@Getter
 	private TaskEntity task;
-	private H2 title;
+	private H4 title;
 	private Paragraph description;
 	private Checkbox completedCheckbox;
 	private Div buttonsDiv;
 	private Button editButton;
+	private Div textDiv;
 	
 	public TaskComponent(TaskService taskService, TaskEntity task) {
 		this.taskService = taskService;
 		this.task = task;
-		title = new H2(task.getTitle());
+		title = new H4(task.getTitle());
 		description = new Paragraph(task.getDescription());
-		
+		textDiv = new Div(title, description);
+
 		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		completedCheckbox.addValueChangeListener(event -> {
 			this.task.setCompleted(event.getValue());
@@ -43,8 +46,8 @@ public class TaskComponent extends VerticalLayout {
 			taskFormDialog.open();
 		});
 		
-		buttonsDiv.add(editButton);
-		add(title, description, completedCheckbox, buttonsDiv);
+		buttonsDiv.add(editButton, completedCheckbox);
+		add(textDiv, buttonsDiv);
 		
 		applyStyles();
 	}
@@ -55,6 +58,16 @@ public class TaskComponent extends VerticalLayout {
 		
 		// Color the task component based on the completion status
 		addClassName(task.isCompleted() ? LumoUtility.Background.SUCCESS_10 : LumoUtility.Background.ERROR_10);
+		
+		setMaxWidth(15, Unit.REM);
+		setMaxHeight(15, Unit.REM);
+		textDiv.setSizeFull();
+		textDiv.getStyle().set("word-wrap", "break-word");
+		title.setWidthFull();
+		description.setWidthFull();
+		textDiv.addClassName(LumoUtility.Overflow.HIDDEN);
+		
+		buttonsDiv.setWidthFull();
 	}
 	
 	public void update(TaskEntity task) {

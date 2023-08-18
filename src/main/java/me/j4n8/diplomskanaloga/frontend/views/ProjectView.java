@@ -46,6 +46,7 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Long>
 		div = new Div(newTaskButton, name);
 		
 		add(div, taskList);
+		
 		applyStyles();
 	}
 	
