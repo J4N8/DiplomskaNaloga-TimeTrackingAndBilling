@@ -1,9 +1,10 @@
 package me.j4n8.diplomskanaloga.frontend.components.projects;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -16,16 +17,18 @@ public class ProjectComponent extends VerticalLayout {
 	private final ProjectService projectService;
 	@Getter
 	private ProjectEntity project;
-	private H2 name;
+	private H4 name;
 	private Paragraph description;
 	private Button editButton;
 	private Div buttonsDiv;
+	private Div textDiv;
 	
 	public ProjectComponent(ProjectService projectService, ProjectEntity project) {
 		this.projectService = projectService;
 		this.project = project;
-		name = new H2(project.getName());
+		name = new H4(project.getName());
 		description = new Paragraph(project.getDescription());
+		textDiv = new Div(name, description);
 		
 		buttonsDiv = new Div();
 		editButton = new Button("Edit");
@@ -41,12 +44,21 @@ public class ProjectComponent extends VerticalLayout {
 		});
 		
 		buttonsDiv.add(editButton);
-		add(name, description, buttonsDiv);
+		add(textDiv, buttonsDiv);
 		
 		applyStyles();
 	}
 	
 	public void applyStyles() {
 		addClassName(LumoUtility.Border.ALL);
+		setMaxWidth(15, Unit.REM);
+		setMaxHeight(15, Unit.REM);
+		textDiv.setSizeFull();
+		textDiv.getStyle().set("word-wrap", "break-word");
+		name.setWidthFull();
+		description.setWidthFull();
+		textDiv.addClassName(LumoUtility.Overflow.HIDDEN);
+		
+		buttonsDiv.setWidthFull();
 	}
 }
