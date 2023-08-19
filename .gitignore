@@ -33,3 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 /frontend/generated/
+/src/main/resources/todo.md
