@@ -20,14 +20,13 @@ public class TaskService {
 	
 	/***
 	 * Creates new task and sets user to authenticated user
-	 * @param title Title of task
-	 * @param description Description of task
+	 * @param task Task to create
 	 * @return Created task
 	 */
-	public TaskEntity createTask(String title, String description, ProjectEntity projectEntity) {
+	public TaskEntity createTask(TaskEntity task) {
 		UserEntity authenticatedUser = securityService.getAuthenticatedUser();
-		TaskEntity newTask = new TaskEntity(null, title, description, false, authenticatedUser, projectEntity);
-		return taskRepository.save(newTask);
+		task.setUser(authenticatedUser);
+		return taskRepository.save(task);
 	}
 	
 	/***
@@ -59,5 +58,9 @@ public class TaskService {
 	
 	public List<TaskEntity> findAllByProject(ProjectEntity projectEntity) {
 		return taskRepository.findByProject_Id(projectEntity.getId());
+	}
+	
+	public TaskEntity findById(TaskEntity taskEntity) {
+		return taskRepository.findById(taskEntity.getId()).orElse(null);
 	}
 }

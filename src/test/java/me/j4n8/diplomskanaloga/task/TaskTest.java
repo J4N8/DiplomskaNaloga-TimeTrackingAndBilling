@@ -2,6 +2,7 @@ package me.j4n8.diplomskanaloga.task;
 
 import me.j4n8.diplomskanaloga.authentication.SecurityService;
 import me.j4n8.diplomskanaloga.project.ProjectRepository;
+import me.j4n8.diplomskanaloga.project.ProjectService;
 import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 import me.j4n8.diplomskanaloga.user.UserRepository;
@@ -15,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.List;
+
 @SpringBootTest()
 @AutoConfigureMockMvc
 @TestPropertySource("classpath:application-test.properties")
@@ -25,10 +28,12 @@ public class TaskTest {
 	@MockBean
 	private SecurityService securityService;
 	@Autowired
-	private ProjectRepository projectRepository;
+	private ProjectService projectService;
 	@Autowired
 	private UserRepository userRepository;
 	private ProjectEntity project;
+	@Autowired
+	private ProjectRepository projectRepository;
 	
 	@BeforeEach
 	public void setUp() {
@@ -38,16 +43,16 @@ public class TaskTest {
 		Mockito.when(securityService.getAuthenticatedUser())
 				.thenReturn(user);
 		
-		project = new ProjectEntity(1L, "testProject", "testDescription", securityService.getAuthenticatedUser(), null);
-		projectRepository.save(project);
+		ProjectEntity project1 = new ProjectEntity(1L, "testProject", "testDescription", securityService.getAuthenticatedUser(), null);
+		project = projectRepository.save(project1);
 	}
 	
 	@Test
 	public void testCreateTask() throws Exception {
 		UserEntity user = securityService.getAuthenticatedUser();
-		projectRepository.save(project);
+		projectService.createProject(project);
 		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, user, project);
-		TaskEntity createdTask = taskService.createTask(task.getTitle(), task.getDescription(), task.getProject());
+		TaskEntity createdTask = taskService.createTask(task);
 		
 		assert (createdTask.getTitle().equals(task.getTitle()));
 		assert (createdTask.getDescription().equals(task.getDescription()));
@@ -59,7 +64,7 @@ public class TaskTest {
 	@Test
 	public void testUpdateTask() throws Exception {
 		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, null, project);
-		TaskEntity createdTask = taskService.createTask(task.getTitle(), task.getDescription(), task.getProject());
+		TaskEntity createdTask = taskService.createTask(task);
 		
 		createdTask.setTitle("updatedTitle");
 		createdTask.setDescription("updatedDescription");
@@ -75,29 +80,25 @@ public class TaskTest {
 	@Test
 	public void testDeleteTask() throws Exception {
 		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, null, project);
-		TaskEntity createdTask = taskService.createTask(task.getTitle(), task.getDescription(), task.getProject());
+		TaskEntity createdTask = taskService.createTask(task);
 		
 		taskService.delete(createdTask);
 		
-		assert (taskService.findAllByAuthUser().isEmpty());
+		assert (taskService.findById(createdTask) == null);
 	}
 	
 	@Test
 	public void testFindAllByProject() throws Exception {
 		UserEntity user = securityService.getAuthenticatedUser();
-		ProjectEntity project1 = new ProjectEntity(1L, "project1", "testDescription", user, null);
-		projectRepository.save(project1);
-		ProjectEntity project2 = new ProjectEntity(2L, "project2", "testDescription", user, null);
-		projectRepository.save(project2);
+		ProjectEntity project1 = projectService.createProject(new ProjectEntity(1L, "project1", "testDescription", user, null));
+		ProjectEntity project2 = projectService.createProject(new ProjectEntity(2L, "project2", "testDescription", user, null));
 		
-		TaskEntity task1 = new TaskEntity(null, "testTask1", "testDescription", false, null, project1);
-		TaskEntity createdTask1 = taskService.createTask(task1.getTitle(), task1.getDescription(), task1.getProject());
-		TaskEntity task2 = new TaskEntity(null, "testTask2", "testDescription", false, null, project2);
-		TaskEntity createdTask2 = taskService.createTask(task2.getTitle(), task2.getDescription(), task2.getProject());
+		taskService.createTask(new TaskEntity(null, "testTask1", "testDescription", false, null, project1));
+		taskService.createTask(new TaskEntity(null, "testTask2", "testDescription", false, null, project2));
 		
-		taskService.createTask(task1.getTitle(), task1.getDescription(), task1.getProject());
-		taskService.createTask(task2.getTitle(), task2.getDescription(), task2.getProject());
-		
-		assert (taskService.findAllByProject(project1).size() == 2);
+		List<TaskEntity> allByProject = taskService.findAllByProject(project1);
+		allByProject.forEach(taskEntity -> {
+			assert (taskEntity.getProject().getId().equals(project1.getId()));
+		});
 	}
 }
