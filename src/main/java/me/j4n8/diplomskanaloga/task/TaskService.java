@@ -45,7 +45,7 @@ public class TaskService {
 	 * Finds all tasks for authenticated user
 	 * @return List of tasks
 	 */
-	public List<TaskEntity> findAll() {
+	public List<TaskEntity> findAllByAuthUser() {
 		return taskRepository.findByUser_Id(securityService.getAuthenticatedUser().getId());
 	}
 	

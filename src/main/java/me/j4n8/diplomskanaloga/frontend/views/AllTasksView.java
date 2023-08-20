@@ -22,7 +22,7 @@ public class AllTasksView extends VerticalLayout {
 		setSizeFull();
 		
 		title = new H1("All tasks");
-		taskList = new TaskList(this.taskService, this.taskService.findAll());
+		taskList = new TaskList(this.taskService, this.taskService.findAllByAuthUser());
 		
 		add(title, taskList);
 		applyStyles();
