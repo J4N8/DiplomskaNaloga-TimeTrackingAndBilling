@@ -28,10 +28,18 @@ public class ProjectEntity {
 	@Column(name = "description", nullable = true)
 	private String description;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
-	private UserEntity user;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinColumn(table = "project_members", name = "project_id", referencedColumnName = "id")
+	private List<UserEntity> users;
 	
 	@OneToMany(mappedBy = "project")
 	private List<TaskEntity> tasks;
+	
+	public void addUser(UserEntity user) {
+		users.add(user);
+	}
+	
+	public void removeUser(UserEntity user) {
+		users.remove(user);
+	}
 }

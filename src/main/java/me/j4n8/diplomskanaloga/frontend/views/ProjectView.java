@@ -10,6 +10,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import me.j4n8.diplomskanaloga.frontend.components.MainLayout;
+import me.j4n8.diplomskanaloga.frontend.components.projects.ManageMembersDialog;
 import me.j4n8.diplomskanaloga.frontend.components.tasks.TaskFormDialog;
 import me.j4n8.diplomskanaloga.frontend.components.tasks.TaskList;
 import me.j4n8.diplomskanaloga.frontend.enums.FormType;
@@ -29,6 +30,8 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Long>
 	private TaskList taskList;
 	private Button newTaskButton;
 	private Div div;
+	private Button manageMembersButton;
+	private Div buttonsDiv;
 	
 	public ProjectView(TaskService taskService, ProjectService projectService) {
 		this.taskService = taskService;
@@ -43,7 +46,14 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Long>
 			taskFormDialog.open();
 		});
 		
-		div = new Div(newTaskButton, name);
+		manageMembersButton = new Button("Manage members", e -> {
+			ManageMembersDialog manageMembersDialog = new ManageMembersDialog(projectService, projectEntity);
+			manageMembersDialog.open();
+		});
+		
+		buttonsDiv = new Div(newTaskButton, manageMembersButton);
+		
+		div = new Div(buttonsDiv, name);
 		
 		add(div, taskList);
 		
@@ -55,6 +65,8 @@ public class ProjectView extends VerticalLayout implements HasUrlParameter<Long>
 		div.setWidthFull();
 		name.setWidthFull();
 		name.addClassName(LumoUtility.TextAlignment.CENTER);
+		
+		buttonsDiv.addClassNames(LumoUtility.Gap.SMALL, LumoUtility.Display.FLEX);
 	}
 	
 	@Override

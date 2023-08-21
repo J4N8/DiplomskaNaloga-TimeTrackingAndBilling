@@ -2,6 +2,8 @@ package me.j4n8.diplomskanaloga.project;
 
 import me.j4n8.diplomskanaloga.authentication.SecurityService;
 import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
+import me.j4n8.diplomskanaloga.user.UserService;
+import me.j4n8.diplomskanaloga.user.entities.UserEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,10 +12,12 @@ import java.util.List;
 public class ProjectService {
 	private final SecurityService securityService;
 	private final ProjectRepository projectRepository;
+	private final UserService userService;
 	
-	public ProjectService(SecurityService securityService, ProjectRepository projectRepository) {
+	public ProjectService(SecurityService securityService, ProjectRepository projectRepository, UserService userService) {
 		this.securityService = securityService;
 		this.projectRepository = projectRepository;
+		this.userService = userService;
 	}
 	
 	/***
@@ -22,7 +26,7 @@ public class ProjectService {
 	 * @return Created project
 	 */
 	public ProjectEntity createProject(ProjectEntity projectEntity) {
-		projectEntity.setUser(securityService.getAuthenticatedUser());
+		projectEntity.setUsers(List.of(securityService.getAuthenticatedUser()));
 		return projectRepository.save(projectEntity);
 	}
 	
@@ -48,10 +52,35 @@ public class ProjectService {
 	 * @return List of projects
 	 */
 	public List<ProjectEntity> findAll() {
-		return projectRepository.findByUser_Id(securityService.getAuthenticatedUser().getId());
+		return projectRepository.findByUsers_Id(securityService.getAuthenticatedUser().getId());
 	}
 	
 	public ProjectEntity findById(Long id) {
 		return projectRepository.findById(id).orElse(null);
+	}
+	
+	public boolean inviteMember(ProjectEntity project, String email) {
+		try {
+			UserEntity user = userService.findByEmail(email);
+			project.addUser(user);
+			projectRepository.save(project);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public List<UserEntity> getMembers(ProjectEntity project) {
+		return project.getUsers();
+	}
+	
+	public boolean removeMember(UserEntity member, ProjectEntity project) {
+		try {
+			project.removeUser(member);
+			projectRepository.save(project);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

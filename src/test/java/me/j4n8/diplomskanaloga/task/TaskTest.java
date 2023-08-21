@@ -43,7 +43,7 @@ public class TaskTest {
 		Mockito.when(securityService.getAuthenticatedUser())
 				.thenReturn(user);
 		
-		ProjectEntity project1 = new ProjectEntity(1L, "testProject", "testDescription", securityService.getAuthenticatedUser(), null);
+		ProjectEntity project1 = new ProjectEntity(1L, "testProject", "testDescription", List.of(securityService.getAuthenticatedUser()), null);
 		project = projectRepository.save(project1);
 	}
 	
@@ -90,8 +90,8 @@ public class TaskTest {
 	@Test
 	public void testFindAllByProject() throws Exception {
 		UserEntity user = securityService.getAuthenticatedUser();
-		ProjectEntity project1 = projectService.createProject(new ProjectEntity(1L, "project1", "testDescription", user, null));
-		ProjectEntity project2 = projectService.createProject(new ProjectEntity(2L, "project2", "testDescription", user, null));
+		ProjectEntity project1 = projectService.createProject(new ProjectEntity(1L, "project1", "testDescription", List.of(user), null));
+		ProjectEntity project2 = projectService.createProject(new ProjectEntity(2L, "project2", "testDescription", List.of(user), null));
 		
 		taskService.createTask(new TaskEntity(null, "testTask1", "testDescription", false, null, project1));
 		taskService.createTask(new TaskEntity(null, "testTask2", "testDescription", false, null, project2));

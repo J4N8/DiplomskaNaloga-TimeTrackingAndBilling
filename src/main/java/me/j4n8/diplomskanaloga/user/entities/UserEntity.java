@@ -38,7 +38,7 @@ public class UserEntity implements UserDetails {
 	private java.util.List<me.j4n8.diplomskanaloga.task.entities.TaskEntity> tasks;
 	
 	// Link to projects
-	@OneToMany(mappedBy = "user")
+	@ManyToMany(mappedBy = "users")
 	private java.util.List<me.j4n8.diplomskanaloga.project.entities.ProjectEntity> projects;
 	
 	@Override

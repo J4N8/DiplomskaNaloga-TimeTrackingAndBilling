@@ -20,4 +20,8 @@ public class UserService {
 		UserEntity newUser = new UserEntity(null, username, email, passwordEncoder.encode(password), null, null);
 		return userRepository.save(newUser);
 	}
+	
+	public UserEntity findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 }
