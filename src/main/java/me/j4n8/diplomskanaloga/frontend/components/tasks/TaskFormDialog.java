@@ -1,6 +1,7 @@
 package me.j4n8.diplomskanaloga.frontend.components.tasks;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
@@ -12,6 +13,9 @@ import me.j4n8.diplomskanaloga.frontend.enums.FormType;
 import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 import me.j4n8.diplomskanaloga.task.TaskService;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
+import me.j4n8.diplomskanaloga.user.entities.UserEntity;
+
+import java.util.List;
 
 public class TaskFormDialog extends Dialog {
 	private ProjectEntity projectEntity;
@@ -26,16 +30,25 @@ public class TaskFormDialog extends Dialog {
 	private Div buttonsDiv;
 	private Binder<TaskEntity> binder;
 	private final FormType formType;
+	private List<UserEntity> members;
+	private ComboBox<UserEntity> assigneeComboBox;
 	
 	public TaskFormDialog(TaskService taskService, FormType formType, ProjectEntity projectEntity) {
 		this.taskService = taskService;
 		this.formType = formType;
 		this.projectEntity = projectEntity;
+		this.members = projectEntity.getUsers();
 		
 		title = new TextField("Title");
 		title.setMaxLength(50);
 		description = new TextArea("Description");
 		description.setMaxLength(255);
+		assigneeComboBox = new ComboBox<>("Assigned to");
+		assigneeComboBox.setItems(members);
+		assigneeComboBox.setItemLabelGenerator(UserEntity::getUsername);
+		if (formType == FormType.EDIT) {
+			assigneeComboBox.setValue(task.getUser());
+		}
 		
 		createButton = new Button("Create");
 		createButton.addClickListener(event -> {
@@ -49,7 +62,7 @@ public class TaskFormDialog extends Dialog {
 		
 		editButton = new Button("Edit");
 		editButton.addClickListener(event -> {
-			create();
+			update();
 		});
 		
 		deleteButton = new Button("Delete");
@@ -64,7 +77,7 @@ public class TaskFormDialog extends Dialog {
 		} else if (formType == FormType.EDIT) {
 			setHeaderTitle("Edit task");
 		}
-		add(title, description);
+		add(title, description, assigneeComboBox);
 		getFooter().add(buttonsDiv);
 		
 		
@@ -90,6 +103,7 @@ public class TaskFormDialog extends Dialog {
 		buttonsDiv.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Flex.AUTO, LumoUtility.Gap.SMALL);
 		title.setWidthFull();
 		description.setWidthFull();
+		assigneeComboBox.setWidthFull();
 	}
 	
 	private void validation() {
@@ -99,6 +113,9 @@ public class TaskFormDialog extends Dialog {
 				.bind(TaskEntity::getTitle, TaskEntity::setTitle);
 		binder.forField(description)
 				.bind(TaskEntity::getDescription, TaskEntity::setDescription);
+		binder.forField(assigneeComboBox)
+				.asRequired("Assignee is required")
+				.bind(TaskEntity::getUser, TaskEntity::setUser);
 	}
 	
 	public void setTask(TaskEntity task) {
@@ -109,6 +126,7 @@ public class TaskFormDialog extends Dialog {
 	public void create() {
 		try {
 			task.setProject(projectEntity);
+			task.setUser(assigneeComboBox.getValue());
 			binder.writeBean(task);
 			taskService.save(task);
 			clear();
@@ -120,6 +138,7 @@ public class TaskFormDialog extends Dialog {
 	
 	public void update() {
 		try {
+			task.setUser(assigneeComboBox.getValue());
 			binder.writeBean(task);
 			taskService.save(task);
 			this.close();

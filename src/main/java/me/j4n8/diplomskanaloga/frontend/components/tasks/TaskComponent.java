@@ -41,7 +41,7 @@ public class TaskComponent extends VerticalLayout {
 		buttonsDiv = new Div();
 		editButton = new Button("Edit");
 		editButton.addClickListener(event -> {
-			TaskFormDialog taskFormDialog = new TaskFormDialog(taskService, FormType.EDIT, null);
+			TaskFormDialog taskFormDialog = new TaskFormDialog(taskService, FormType.EDIT, this.task.getProject());
 			taskFormDialog.setTask(this.task);
 			taskFormDialog.open();
 		});
@@ -68,12 +68,5 @@ public class TaskComponent extends VerticalLayout {
 		textDiv.addClassName(LumoUtility.Overflow.HIDDEN);
 		
 		buttonsDiv.setWidthFull();
-	}
-	
-	public void update(TaskEntity task) {
-		this.task = task;
-		title.setText(task.getTitle());
-		description.setText(task.getDescription());
-		completedCheckbox.setValue(task.isCompleted());
 	}
 }
