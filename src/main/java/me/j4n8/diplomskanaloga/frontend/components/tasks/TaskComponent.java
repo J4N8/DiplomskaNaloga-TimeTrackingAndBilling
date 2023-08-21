@@ -34,7 +34,7 @@ public class TaskComponent extends VerticalLayout {
 		title = new H4(task.getTitle());
 		description = new Paragraph(task.getDescription());
 		assigneeSpan = new Span(LumoIcon.USER.create(), new Text(task.getUser().getUsername()));
-		textDiv = new Div(title, description, assigneeSpan);
+		textDiv = new Div(title, description);
 
 		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		completedCheckbox.addValueChangeListener(event -> {
@@ -52,7 +52,7 @@ public class TaskComponent extends VerticalLayout {
 		});
 		
 		buttonsDiv.add(editButton, completedCheckbox);
-		add(textDiv, buttonsDiv);
+		add(textDiv, assigneeSpan, buttonsDiv);
 		
 		applyStyles();
 	}
