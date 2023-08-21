@@ -1,12 +1,15 @@
 package me.j4n8.diplomskanaloga.frontend.components.tasks;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.theme.lumo.LumoIcon;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import lombok.Getter;
 import me.j4n8.diplomskanaloga.frontend.enums.FormType;
@@ -23,13 +26,15 @@ public class TaskComponent extends VerticalLayout {
 	private Div buttonsDiv;
 	private Button editButton;
 	private Div textDiv;
+	private Span assigneeSpan;
 	
 	public TaskComponent(TaskService taskService, TaskEntity task) {
 		this.taskService = taskService;
 		this.task = task;
 		title = new H4(task.getTitle());
 		description = new Paragraph(task.getDescription());
-		textDiv = new Div(title, description);
+		assigneeSpan = new Span(LumoIcon.USER.create(), new Text(task.getUser().getUsername()));
+		textDiv = new Div(title, description, assigneeSpan);
 
 		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		completedCheckbox.addValueChangeListener(event -> {
@@ -68,5 +73,8 @@ public class TaskComponent extends VerticalLayout {
 		textDiv.addClassName(LumoUtility.Overflow.HIDDEN);
 		
 		buttonsDiv.setWidthFull();
+		
+		assigneeSpan.setWidthFull();
+//		assigneeSpan.addClassName();
 	}
 }
