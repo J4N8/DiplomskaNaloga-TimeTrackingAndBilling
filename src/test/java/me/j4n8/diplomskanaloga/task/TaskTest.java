@@ -51,7 +51,7 @@ public class TaskTest {
 	public void testCreateTask() throws Exception {
 		UserEntity user = securityService.getAuthenticatedUser();
 		projectService.createProject(project);
-		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, user, project);
+		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, user, project, null);
 		TaskEntity createdTask = taskService.createTask(task);
 		
 		assert (createdTask.getTitle().equals(task.getTitle()));
@@ -63,7 +63,7 @@ public class TaskTest {
 	
 	@Test
 	public void testUpdateTask() throws Exception {
-		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, null, project);
+		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, null, project, null);
 		TaskEntity createdTask = taskService.createTask(task);
 		
 		createdTask.setTitle("updatedTitle");
@@ -79,7 +79,7 @@ public class TaskTest {
 	
 	@Test
 	public void testDeleteTask() throws Exception {
-		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, null, project);
+		TaskEntity task = new TaskEntity(null, "testTask", "testDescription", false, null, project, null);
 		TaskEntity createdTask = taskService.createTask(task);
 		
 		taskService.delete(createdTask);
@@ -93,8 +93,8 @@ public class TaskTest {
 		ProjectEntity project1 = projectService.createProject(new ProjectEntity(1L, "project1", "testDescription", List.of(user), null));
 		ProjectEntity project2 = projectService.createProject(new ProjectEntity(2L, "project2", "testDescription", List.of(user), null));
 		
-		taskService.createTask(new TaskEntity(null, "testTask1", "testDescription", false, null, project1));
-		taskService.createTask(new TaskEntity(null, "testTask2", "testDescription", false, null, project2));
+		taskService.createTask(new TaskEntity(null, "testTask1", "testDescription", false, null, project1, null));
+		taskService.createTask(new TaskEntity(null, "testTask2", "testDescription", false, null, project2, null));
 		
 		List<TaskEntity> allByProject = taskService.findAllByProject(project1);
 		allByProject.forEach(taskEntity -> {

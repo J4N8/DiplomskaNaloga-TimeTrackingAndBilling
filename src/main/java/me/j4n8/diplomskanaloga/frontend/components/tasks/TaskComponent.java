@@ -1,6 +1,7 @@
 package me.j4n8.diplomskanaloga.frontend.components.tasks;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -53,6 +54,10 @@ public class TaskComponent extends VerticalLayout {
 		
 		buttonsDiv.add(editButton, completedCheckbox);
 		add(textDiv, assigneeSpan, buttonsDiv);
+		
+		addDoubleClickListener(event -> {
+			UI.getCurrent().navigate("task/" + task.getId());
+		});
 		
 		applyStyles();
 	}

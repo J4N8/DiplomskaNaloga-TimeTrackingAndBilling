@@ -6,7 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
+import me.j4n8.diplomskanaloga.time_tracking.entities.TimeTrackingEntity;
 import me.j4n8.diplomskanaloga.user.entities.UserEntity;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,4 +41,8 @@ public class TaskEntity {
 	@ManyToOne
 	@JoinColumn(name = "project_id", nullable = false)
 	private ProjectEntity project;
+	
+	// Link to time tracking
+	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER)
+	private List<TimeTrackingEntity> timeTracking;
 }
