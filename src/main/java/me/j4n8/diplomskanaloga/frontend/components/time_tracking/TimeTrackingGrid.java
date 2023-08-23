@@ -31,6 +31,7 @@ public class TimeTrackingGrid extends HorizontalLayout {
 		grid.removeAllColumns();
 		grid.addColumn(timeTrackingEntity -> formatTimestampDate(timeTrackingEntity.getStartTime())).setHeader("Date");
 		grid.addColumn(timeTrackingEntity -> formatTimestampTime(timeTrackingEntity.getStartTime())).setHeader("Start time");
+		grid.addColumn(timeTrackingEntity -> formatTimestampDate(timeTrackingEntity.getEndTime())).setHeader("Date");
 		grid.addColumn(timeTrackingEntity -> formatTimestampTime(timeTrackingEntity.getEndTime())).setHeader("End time");
 		grid.addColumn(timeTrackingEntity -> formatDuration(timeTrackingEntity.getDuration())).setHeader("Duration");
 	}
