@@ -21,7 +21,6 @@ public class TimeTrackingComponent extends Div {
 		this.timeTrackingService = timeTrackingService;
 		this.timeTracking = timeTracking;
 		
-		//TODO: Fix time format to be more readable (HH:MM:SS)
 		durationSpan = new Span(timeTracking.getDuration().toString());
 		durationSpan.setTitle("Duration");
 		startTimeSpan = new Span(timeTracking.getStartTime().toString());
