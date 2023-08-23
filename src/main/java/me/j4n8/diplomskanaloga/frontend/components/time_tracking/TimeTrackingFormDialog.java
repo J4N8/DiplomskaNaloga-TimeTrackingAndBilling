@@ -36,6 +36,9 @@ public class TimeTrackingFormDialog extends Dialog {
 		endTimeField = new DateTimePicker("End time");
 		endTimeField.setStep(Duration.ofMinutes(30));
 		endTimeField.setMax(LocalDateTime.now());
+		startTimeField.addValueChangeListener(event -> {
+			endTimeField.setMin(startTimeField.getValue());
+		});
 		
 		buttonsDiv = generateButtons();
 		add(startTimeField, endTimeField, buttonsDiv);
