@@ -1,5 +1,6 @@
 package me.j4n8.diplomskanaloga.frontend.components.time_tracking;
 
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
@@ -17,6 +18,14 @@ public class TimeTrackingGrid extends HorizontalLayout {
 		
 		grid = new Grid<>(TimeTrackingEntity.class);
 		grid.setItems(timeTrackingService.findAllByTaskId(task));
+		grid.addItemDoubleClickListener(event -> {
+			new ConfirmDialog("Delete time tracking", "Are you sure you want to delete this time tracking?",
+					"Yes", e -> {
+				timeTrackingService.delete(event.getItem());
+				grid.setItems(timeTrackingService.findAllByTaskId(task));
+			}, "No", e -> {
+			}).open();
+		});
 		
 		applyStyles();
 		
