@@ -10,13 +10,11 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import me.j4n8.diplomskanaloga.frontend.components.MainLayout;
-import me.j4n8.diplomskanaloga.frontend.components.time_tracking.TimeTrackingList;
+import me.j4n8.diplomskanaloga.frontend.components.time_tracking.TimeTrackingFormDialog;
+import me.j4n8.diplomskanaloga.frontend.components.time_tracking.TimeTrackingGrid;
 import me.j4n8.diplomskanaloga.task.TaskService;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 import me.j4n8.diplomskanaloga.time_tracking.TimeTrackingService;
-import me.j4n8.diplomskanaloga.time_tracking.entities.TimeTrackingEntity;
-
-import java.util.List;
 
 @Route(value = "task", layout = MainLayout.class)
 @PermitAll
@@ -25,7 +23,7 @@ public class TaskTimeTrackingView extends VerticalLayout implements HasUrlParame
 	private final TimeTrackingService timeTrackingService;
 	private TaskEntity taskEntity;
 	private H2 taskTitle;
-	private TimeTrackingList timeTrackingList;
+	private TimeTrackingGrid timeTrackingGrid;
 	private Button startTrackingButton;
 	private Div buttonsDiv;
 	private Div div;
@@ -35,22 +33,17 @@ public class TaskTimeTrackingView extends VerticalLayout implements HasUrlParame
 		this.timeTrackingService = timeTrackingService;
 		
 		taskTitle = new H2();
-		timeTrackingList = new TimeTrackingList(timeTrackingService, List.of());
 		
-		startTrackingButton = new Button("Start new tracking", e -> {
-			TimeTrackingEntity timeTrackingEntity = new TimeTrackingEntity();
-			timeTrackingEntity.setTask(taskEntity);
-			timeTrackingEntity = timeTrackingService.create(timeTrackingEntity);
-			
-			timeTrackingList.addTimeTracking(timeTrackingEntity);
+		startTrackingButton = new Button("New tracking", e -> {
+			new TimeTrackingFormDialog(timeTrackingService, taskEntity).open();
 		});
 		
 		buttonsDiv = new Div(startTrackingButton);
 		div = new Div(buttonsDiv, taskTitle);
 		
-		add(div, timeTrackingList);
-		
-		applyStyles();
+		add(div);
+
+//		applyStyles();
 	}
 	
 	private void applyStyles() {
@@ -59,14 +52,17 @@ public class TaskTimeTrackingView extends VerticalLayout implements HasUrlParame
 		div.setWidthFull();
 		taskTitle.setWidthFull();
 		taskTitle.addClassName(LumoUtility.TextAlignment.CENTER);
-		
 		buttonsDiv.addClassNames(LumoUtility.Gap.SMALL, LumoUtility.Display.FLEX);
+		
+		timeTrackingGrid.setWidthFull();
 	}
 	
 	@Override
 	public void setParameter(BeforeEvent event, Long parameter) {
 		taskEntity = taskService.findById(parameter);
 		taskTitle.setText(taskEntity.getTitle());
-		timeTrackingList.setTimeTrackings(taskEntity.getTimeTracking());
+		timeTrackingGrid = new TimeTrackingGrid(timeTrackingService, taskEntity);
+		add(timeTrackingGrid);
+		applyStyles();
 	}
 }
