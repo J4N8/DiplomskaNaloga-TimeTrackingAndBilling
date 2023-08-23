@@ -27,6 +27,7 @@ public class ManageMembersDialog extends Dialog {
 		
 		email = new EmailField("Email");
 		email.setClearButtonVisible(true);
+		email.setRequired(true);
 		
 		buttonsDiv = generateButtons();
 		
@@ -51,7 +52,7 @@ public class ManageMembersDialog extends Dialog {
 	}
 	
 	private void invite() {
-		if (email.isInvalid()) {
+		if (email.isInvalid() || email.isEmpty()) {
 			email.setErrorMessage("Please enter a valid email address");
 			email.setInvalid(true);
 			return;
