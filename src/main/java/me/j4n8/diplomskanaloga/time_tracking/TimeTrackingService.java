@@ -4,9 +4,6 @@ import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 import me.j4n8.diplomskanaloga.time_tracking.entities.TimeTrackingEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,8 +19,6 @@ public class TimeTrackingService {
 	}
 	
 	public TimeTrackingEntity create(TimeTrackingEntity timeTrackingEntity) {
-		timeTrackingEntity.setStartTime(Timestamp.valueOf(LocalDateTime.now()));
-		timeTrackingEntity.setDuration(Duration.ZERO);
 		return timeTrackingRepository.save(timeTrackingEntity);
 	}
 	
