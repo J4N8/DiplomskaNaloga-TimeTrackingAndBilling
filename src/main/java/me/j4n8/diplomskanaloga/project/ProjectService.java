@@ -59,9 +59,21 @@ public class ProjectService {
 		return projectRepository.findById(id).orElse(null);
 	}
 	
-	public boolean inviteMember(ProjectEntity project, String email) {
+	public boolean inviteMember(ProjectEntity project, String email) throws IllegalArgumentException {
+		UserEntity user = userService.findByEmail(email);
+		if (user == null) {
+			throw new IllegalArgumentException("There is no user with that email address");
+		}
+		
+		List<UserEntity> projectUsers = project.getUsers();
+		
+		for (UserEntity member : projectUsers) {
+			if (member.getId().equals(user.getId())) {
+				throw new IllegalArgumentException("User is already a member of this project");
+			}
+		}
+		
 		try {
-			UserEntity user = userService.findByEmail(email);
 			project.addUser(user);
 			projectRepository.save(project);
 			return true;

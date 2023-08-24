@@ -57,12 +57,16 @@ public class ManageMembersDialog extends Dialog {
 			email.setInvalid(true);
 			return;
 		}
-		
-		boolean result = projectService.inviteMember(project, email.getValue());
-		if (result) {
-			new Notification("Invitation sent!", 5 * 1000).open();
-		} else {
-			email.setErrorMessage("There is no user with that email address");
+		try {
+			boolean result = projectService.inviteMember(project, email.getValue());
+			if (result) {
+				new Notification("User added!", 5 * 1000).open();
+				close();
+			} else {
+				new Notification("Something went wrong", 5 * 1000).open();
+			}
+		} catch (IllegalArgumentException e) {
+			email.setErrorMessage(e.getMessage());
 			email.setInvalid(true);
 		}
 	}
