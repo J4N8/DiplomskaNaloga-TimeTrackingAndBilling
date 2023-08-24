@@ -43,6 +43,15 @@ public class TimeTrackingGrid extends HorizontalLayout {
 		grid.addColumn(timeTrackingEntity -> formatTimestampDate(timeTrackingEntity.getEndTime())).setHeader("Date");
 		grid.addColumn(timeTrackingEntity -> formatTimestampTime(timeTrackingEntity.getEndTime())).setHeader("End time");
 		grid.addColumn(timeTrackingEntity -> formatDuration(timeTrackingEntity.getDuration())).setHeader("Duration");
+		grid.addColumn(timeTrackingEntity -> calculateCost(timeTrackingEntity)).setHeader("Cost");
+	}
+	
+	public String calculateCost(TimeTrackingEntity timeTrackingEntity) {
+		Double hourlyRate = timeTrackingEntity.getTask().getHourlyRate();
+		long minutes = timeTrackingEntity.getDuration().toMinutes();
+		double cost = minutes * hourlyRate / 60;
+		// Format to 2 decimal places with € sign at end and 1000 separator ex. 1.234,56€
+		return String.format("%,.2f€", cost);
 	}
 	
 	public String formatDuration(Duration duration) {

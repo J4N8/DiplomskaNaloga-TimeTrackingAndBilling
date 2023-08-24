@@ -9,6 +9,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.theme.lumo.LumoIcon;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -28,6 +29,9 @@ public class TaskComponent extends VerticalLayout {
 	private Button editButton;
 	private Div textDiv;
 	private Span assigneeSpan;
+	private Div priceDiv;
+	private Span hourlyRateSpan;
+	private Span totalCostSpan;
 	
 	public TaskComponent(TaskService taskService, TaskEntity task) {
 		this.taskService = taskService;
@@ -36,6 +40,13 @@ public class TaskComponent extends VerticalLayout {
 		description = new Paragraph(task.getDescription());
 		assigneeSpan = new Span(LumoIcon.USER.create(), new Text(task.getUser().getUsername()));
 		textDiv = new Div(title, description);
+		
+		hourlyRateSpan = new Span(LumoIcon.CLOCK.create(), new Text(String.format("%,.2f€", task.getHourlyRate()) + "/h"));
+		hourlyRateSpan.setTitle("Hourly rate");
+		totalCostSpan = new Span(VaadinIcon.MONEY.create(), new Text(String.format("%,.2f€", task.getTotalCost())));
+		totalCostSpan.setTitle("Total cost");
+		priceDiv = new Div(hourlyRateSpan, totalCostSpan);
+		
 
 		completedCheckbox = new Checkbox("Completed", task.isCompleted());
 		completedCheckbox.addValueChangeListener(event -> {
@@ -53,7 +64,7 @@ public class TaskComponent extends VerticalLayout {
 		});
 		
 		buttonsDiv.add(editButton, completedCheckbox);
-		add(textDiv, assigneeSpan, buttonsDiv);
+		add(textDiv, assigneeSpan, priceDiv, buttonsDiv);
 		
 		addDoubleClickListener(event -> {
 			UI.getCurrent().navigate("task/" + task.getId());
@@ -80,6 +91,8 @@ public class TaskComponent extends VerticalLayout {
 		buttonsDiv.setWidthFull();
 		
 		assigneeSpan.setWidthFull();
-//		assigneeSpan.addClassName();
+		
+		priceDiv.setWidthFull();
+		priceDiv.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.SMALL);
 	}
 }

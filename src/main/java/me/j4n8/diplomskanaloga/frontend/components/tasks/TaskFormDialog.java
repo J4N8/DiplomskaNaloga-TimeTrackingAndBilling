@@ -5,6 +5,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
@@ -32,6 +33,8 @@ public class TaskFormDialog extends Dialog {
 	private final FormType formType;
 	private List<UserEntity> members;
 	private ComboBox<UserEntity> assigneeComboBox;
+	private NumberField hourlyRate;
+	private Div flexDiv;
 	
 	public TaskFormDialog(TaskService taskService, FormType formType, ProjectEntity projectEntity) {
 		this.taskService = taskService;
@@ -49,6 +52,13 @@ public class TaskFormDialog extends Dialog {
 		if (formType == FormType.EDIT) {
 			assigneeComboBox.setValue(task.getUser());
 		}
+		hourlyRate = new NumberField("Hourly rate");
+		hourlyRate.setMin(0.0);
+		hourlyRate.setStep(0.5);
+		hourlyRate.setValue(0.0);
+		hourlyRate.setStepButtonsVisible(true);
+		
+		flexDiv = new Div(assigneeComboBox, hourlyRate);
 		
 		createButton = new Button("Create");
 		createButton.addClickListener(event -> {
@@ -77,7 +87,7 @@ public class TaskFormDialog extends Dialog {
 		} else if (formType == FormType.EDIT) {
 			setHeaderTitle("Edit task");
 		}
-		add(title, description, assigneeComboBox);
+		add(title, description, flexDiv);
 		getFooter().add(buttonsDiv);
 		
 		
@@ -103,7 +113,8 @@ public class TaskFormDialog extends Dialog {
 		buttonsDiv.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Flex.AUTO, LumoUtility.Gap.SMALL);
 		title.setWidthFull();
 		description.setWidthFull();
-		assigneeComboBox.setWidthFull();
+		
+		flexDiv.addClassNames(LumoUtility.Display.FLEX, LumoUtility.FlexDirection.ROW, LumoUtility.Gap.SMALL);
 	}
 	
 	private void validation() {
@@ -116,6 +127,9 @@ public class TaskFormDialog extends Dialog {
 		binder.forField(assigneeComboBox)
 				.asRequired("Assignee is required")
 				.bind(TaskEntity::getUser, TaskEntity::setUser);
+		binder.forField(hourlyRate)
+				.asRequired("Hourly rate is required")
+				.bind(TaskEntity::getHourlyRate, TaskEntity::setHourlyRate);
 	}
 	
 	public void setTask(TaskEntity task) {

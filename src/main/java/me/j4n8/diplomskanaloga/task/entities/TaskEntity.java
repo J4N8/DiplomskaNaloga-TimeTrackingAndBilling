@@ -32,6 +32,9 @@ public class TaskEntity {
 	@Column(name = "completed", nullable = false)
 	private boolean completed = false;
 	
+	@Column(name = "hourly_rate", nullable = false)
+	private Double hourlyRate;
+	
 	// Link to user
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
@@ -45,4 +48,18 @@ public class TaskEntity {
 	// Link to time tracking
 	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<TimeTrackingEntity> timeTracking;
+	
+	public double getTotalCost() {
+		double totalCost = 0;
+		for (TimeTrackingEntity timeTrackingEntity : timeTracking) {
+			totalCost += calculateCost(timeTrackingEntity);
+		}
+		return totalCost;
+	}
+	
+	private double calculateCost(TimeTrackingEntity timeTrackingEntity) {
+		Double hourlyRate = timeTrackingEntity.getTask().getHourlyRate();
+		long minutes = timeTrackingEntity.getDuration().toMinutes();
+		return minutes * hourlyRate / 60;
+	}
 }
