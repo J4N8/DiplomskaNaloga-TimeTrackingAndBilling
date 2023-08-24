@@ -32,7 +32,7 @@ public class ProjectEntity {
 	@JoinColumn(table = "project_members", name = "project_id", referencedColumnName = "id")
 	private List<UserEntity> users;
 	
-	@OneToMany(mappedBy = "project")
+	@OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
 	private List<TaskEntity> tasks;
 	
 	public void addUser(UserEntity user) {

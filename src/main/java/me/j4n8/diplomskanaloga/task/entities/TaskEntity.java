@@ -43,6 +43,6 @@ public class TaskEntity {
 	private ProjectEntity project;
 	
 	// Link to time tracking
-	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "task", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<TimeTrackingEntity> timeTracking;
 }
