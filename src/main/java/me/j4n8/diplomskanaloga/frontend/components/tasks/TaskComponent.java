@@ -13,14 +13,12 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.theme.lumo.LumoIcon;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import lombok.Getter;
 import me.j4n8.diplomskanaloga.frontend.enums.FormType;
 import me.j4n8.diplomskanaloga.task.TaskService;
 import me.j4n8.diplomskanaloga.task.entities.TaskEntity;
 
 public class TaskComponent extends VerticalLayout {
 	private final TaskService taskService;
-	@Getter
 	private TaskEntity task;
 	private H4 title;
 	private Paragraph description;

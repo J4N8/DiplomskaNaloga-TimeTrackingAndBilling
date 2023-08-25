@@ -8,14 +8,12 @@ import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import lombok.Getter;
 import me.j4n8.diplomskanaloga.frontend.enums.FormType;
 import me.j4n8.diplomskanaloga.project.ProjectService;
 import me.j4n8.diplomskanaloga.project.entities.ProjectEntity;
 
 public class ProjectComponent extends VerticalLayout {
 	private final ProjectService projectService;
-	@Getter
 	private ProjectEntity project;
 	private H4 name;
 	private Paragraph description;
@@ -38,7 +36,6 @@ public class ProjectComponent extends VerticalLayout {
 			projectFormDialog.open();
 		});
 		
-		// TODO: make mouse cursor change to hand when hovering over the component
 		addDoubleClickListener(event -> {
 			UI.getCurrent().navigate("project/" + project.getId());
 		});

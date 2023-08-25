@@ -29,19 +29,6 @@ public class ProjectList extends HorizontalLayout {
 		projectsDiv.add(new ProjectComponent(projectService, project));
 	}
 	
-	/***
-	 * Removes a project from the list
-	 * @param project Project to be removed
-	 */
-	public void removeTask(ProjectEntity project) {
-		getChildren().filter(component -> component instanceof ProjectComponent).forEach(component -> {
-			ProjectComponent projectComponent = (ProjectComponent) component;
-			if (projectComponent.getProject().getId().equals(project.getId())) {
-				remove(component);
-			}
-		});
-	}
-	
 	private void applyStyles() {
 		setWidthFull();
 		projectsDiv.setWidthFull();

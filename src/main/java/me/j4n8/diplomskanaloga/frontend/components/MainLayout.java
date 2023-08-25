@@ -12,15 +12,12 @@ import me.j4n8.diplomskanaloga.authentication.SecurityService;
 import me.j4n8.diplomskanaloga.frontend.views.AllProjectsView;
 import me.j4n8.diplomskanaloga.frontend.views.AllTasksView;
 import me.j4n8.diplomskanaloga.frontend.views.HomepageView;
-import me.j4n8.diplomskanaloga.task.TaskService;
 
 public class MainLayout extends AppLayout {
 	private final SecurityService securityService;
-	private final TaskService taskService;
 	
-	public MainLayout(SecurityService securityService, TaskService taskService) {
+	public MainLayout(SecurityService securityService) {
 		this.securityService = securityService;
-		this.taskService = taskService;
 		createHeader();
 		createDrawer();
 	}

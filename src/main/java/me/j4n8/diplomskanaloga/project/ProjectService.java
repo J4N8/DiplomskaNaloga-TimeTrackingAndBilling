@@ -86,13 +86,11 @@ public class ProjectService {
 		return project.getUsers();
 	}
 	
-	public boolean removeMember(UserEntity member, ProjectEntity project) {
+	public void removeMember(UserEntity member, ProjectEntity project) {
 		try {
 			project.removeUser(member);
 			projectRepository.save(project);
-			return true;
 		} catch (Exception e) {
-			return false;
 		}
 	}
 }

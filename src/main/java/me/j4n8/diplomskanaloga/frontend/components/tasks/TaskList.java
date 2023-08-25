@@ -29,19 +29,6 @@ public class TaskList extends HorizontalLayout {
 		tasksDiv.add(new TaskComponent(taskService, task));
 	}
 	
-	/***
-	 * Removes task from the list by comparing the id of the task
-	 * @param task Task to remove
-	 */
-	public void removeTask(TaskEntity task) {
-		getChildren().filter(component -> component instanceof TaskComponent).forEach(component -> {
-			TaskComponent taskComponent = (TaskComponent) component;
-			if (taskComponent.getTask().getId().equals(task.getId())) {
-				remove(component);
-			}
-		});
-	}
-	
 	public void setTasks(List<TaskEntity> tasks) {
 		tasksDiv.removeAll();
 		tasks.forEach(task -> addTask(task));
