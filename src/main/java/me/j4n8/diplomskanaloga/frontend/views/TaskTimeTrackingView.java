@@ -42,8 +42,6 @@ public class TaskTimeTrackingView extends VerticalLayout implements HasUrlParame
 		div = new Div(buttonsDiv, taskTitle);
 		
 		add(div);
-		
-		applyStyles();
 	}
 	
 	private void applyStyles() {

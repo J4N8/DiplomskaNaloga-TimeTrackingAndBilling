@@ -78,8 +78,8 @@ public class TaskComponent extends VerticalLayout {
 		// Color the task component based on the completion status
 		addClassName(task.isCompleted() ? LumoUtility.Background.SUCCESS_10 : LumoUtility.Background.ERROR_10);
 		
-		setMaxWidth(15, Unit.REM);
-		setMaxHeight(15, Unit.REM);
+		setMaxWidth(20, Unit.REM);
+		setMaxHeight(20, Unit.REM);
 		textDiv.setSizeFull();
 		textDiv.getStyle().set("word-wrap", "break-word");
 		title.setWidthFull();
