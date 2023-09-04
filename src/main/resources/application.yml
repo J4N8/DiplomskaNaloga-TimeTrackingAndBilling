@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: ${PROFILE}
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
