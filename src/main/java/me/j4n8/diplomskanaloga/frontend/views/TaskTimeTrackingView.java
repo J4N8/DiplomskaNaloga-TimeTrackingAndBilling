@@ -10,6 +10,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import me.j4n8.diplomskanaloga.frontend.components.MainLayout;
+import me.j4n8.diplomskanaloga.frontend.components.RefreshButton;
 import me.j4n8.diplomskanaloga.frontend.components.time_tracking.TimeTrackingFormDialog;
 import me.j4n8.diplomskanaloga.frontend.components.time_tracking.TimeTrackingGrid;
 import me.j4n8.diplomskanaloga.task.TaskService;
@@ -27,6 +28,7 @@ public class TaskTimeTrackingView extends VerticalLayout implements HasUrlParame
 	private Button startTrackingButton;
 	private Div buttonsDiv;
 	private Div div;
+	private RefreshButton refreshButton;
 	
 	public TaskTimeTrackingView(TaskService taskService, TimeTrackingService timeTrackingService) {
 		this.taskService = taskService;
@@ -34,14 +36,21 @@ public class TaskTimeTrackingView extends VerticalLayout implements HasUrlParame
 		
 		taskTitle = new H2();
 		
+		refreshButton = new RefreshButton();
+		refreshButton.addClickListener(e -> reloadData());
+		
 		startTrackingButton = new Button("New tracking", e -> {
 			new TimeTrackingFormDialog(timeTrackingService, taskEntity).open();
 		});
 		
-		buttonsDiv = new Div(startTrackingButton);
+		buttonsDiv = new Div(refreshButton, startTrackingButton);
 		div = new Div(buttonsDiv, taskTitle);
 		
 		add(div);
+	}
+	
+	private void reloadData() {
+		timeTrackingGrid.setItems(timeTrackingService.findAllByTaskId(taskEntity));
 	}
 	
 	private void applyStyles() {

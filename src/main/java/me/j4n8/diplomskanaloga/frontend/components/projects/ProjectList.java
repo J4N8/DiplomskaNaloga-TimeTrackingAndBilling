@@ -29,6 +29,15 @@ public class ProjectList extends HorizontalLayout {
 		projectsDiv.add(new ProjectComponent(projectService, project));
 	}
 	
+	/***
+	 * Sets the projects to be displayed
+	 * @param projects Projects to be displayed
+	 */
+	public void setProjects(List<ProjectEntity> projects) {
+		projectsDiv.removeAll();
+		projects.forEach(project -> addProject(project));
+	}
+	
 	private void applyStyles() {
 		setWidthFull();
 		projectsDiv.setWidthFull();

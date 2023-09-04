@@ -1,6 +1,5 @@
 package me.j4n8.diplomskanaloga.frontend.views;
 
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
@@ -15,7 +14,5 @@ public class HomepageView extends VerticalLayout {
 		setJustifyContentMode(JustifyContentMode.CENTER);
 		setPadding(false);
 		setSpacing(false);
-		
-		add(new Text("Hello world!"));
 	}
 }

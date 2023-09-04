@@ -8,6 +8,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import me.j4n8.diplomskanaloga.frontend.components.MainLayout;
+import me.j4n8.diplomskanaloga.frontend.components.RefreshButton;
 import me.j4n8.diplomskanaloga.frontend.components.projects.ProjectFormDialog;
 import me.j4n8.diplomskanaloga.frontend.components.projects.ProjectList;
 import me.j4n8.diplomskanaloga.frontend.enums.FormType;
@@ -21,6 +22,7 @@ public class AllProjectsView extends VerticalLayout {
 	private ProjectList projectList;
 	private Button newProjectButton;
 	private Div div;
+	private RefreshButton refreshButton;
 	
 	public AllProjectsView(ProjectService projectService) {
 		this.projectService = projectService;
@@ -28,20 +30,26 @@ public class AllProjectsView extends VerticalLayout {
 		setSizeFull();
 		
 		title = new H1("Projects");
+		refreshButton = new RefreshButton();
+		refreshButton.addClickListener(e -> reloadData());
 		projectList = new ProjectList(this.projectService, this.projectService.findAll());
 		newProjectButton = new Button("New project", e -> {
 			ProjectFormDialog projectFormDialog = new ProjectFormDialog(projectService, FormType.CREATE);
 			projectFormDialog.open();
 		});
 		
-		div = new Div(newProjectButton, title);
+		div = new Div(refreshButton, newProjectButton, title);
 		
 		add(div, projectList);
 		applyStyles();
 	}
 	
+	private void reloadData() {
+		projectList.setProjects(this.projectService.findAll());
+	}
+	
 	public void applyStyles(){
-		div.addClassNames(LumoUtility.Display.FLEX);
+		div.addClassNames(LumoUtility.Display.FLEX, LumoUtility.Gap.SMALL);
 		div.setWidthFull();
 		title.setWidthFull();
 		title.addClassName(LumoUtility.TextAlignment.CENTER);
