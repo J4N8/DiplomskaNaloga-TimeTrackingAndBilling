@@ -10,7 +10,7 @@
     </parent>
     <groupId>me.j4n8</groupId>
     <artifactId>DiplomskaNaloga</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>Diplomska Naloga</name>
     <description>Diplomska Naloga</description>
     <properties>
