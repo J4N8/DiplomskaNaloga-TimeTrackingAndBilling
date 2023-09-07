@@ -35,16 +35,17 @@ public class TaskService {
 	 * @return Saved task
 	 */
 	public TaskEntity save(TaskEntity task) {
-		UserEntity user = securityService.getAuthenticatedUser();
-		task.setUser(user);
+		if (securityService.hasNoTaskPermission(task)) {
+			throw new IllegalArgumentException("You do not have permission to edit this task");
+		}
 		return taskRepository.save(task);
 	}
 	
 	/***
-	 * Finds all tasks for authenticated user
+	 * Finds all tasks assigned to authenticated user
 	 * @return List of tasks
 	 */
-	public List<TaskEntity> findAllByAuthUser() {
+	public List<TaskEntity> findAllAssignedToAuthUser() {
 		return taskRepository.findByUser_Id(securityService.getAuthenticatedUser().getId());
 	}
 	
@@ -53,18 +54,28 @@ public class TaskService {
 	 * @param task Task to delete
 	 */
 	public void delete(TaskEntity task) {
+		if (securityService.hasNoTaskPermission(task)) {
+			throw new IllegalArgumentException("You do not have permission to delete this task");
+		}
 		taskRepository.delete(task);
 	}
 	
 	public List<TaskEntity> findAllByProject(ProjectEntity projectEntity) {
+		if (securityService.hasNoProjectPermission(projectEntity)) {
+			throw new IllegalArgumentException("You do not have permission to view this project");
+		}
 		return taskRepository.findByProject_Id(projectEntity.getId());
 	}
 	
 	public TaskEntity findById(TaskEntity taskEntity) {
-		return taskRepository.findById(taskEntity.getId()).orElse(null);
+		return findById(taskEntity.getId());
 	}
 	
 	public TaskEntity findById(Long id) {
-		return taskRepository.findById(id).orElse(null);
+		TaskEntity task = taskRepository.findById(id).orElse(null);
+		if (securityService.hasNoTaskPermission(task)) {
+			throw new IllegalArgumentException("You do not have permission to view this task");
+		}
+		return task;
 	}
 }

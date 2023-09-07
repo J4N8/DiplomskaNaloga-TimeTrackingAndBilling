@@ -36,6 +36,9 @@ public class ProjectService {
 	 * @return Updated project
 	 */
 	public ProjectEntity updateProject(ProjectEntity projectEntity) {
+		if (securityService.hasNoProjectPermission(projectEntity)) {
+			throw new IllegalArgumentException("You do not have permission to edit this project");
+		}
 		return projectRepository.save(projectEntity);
 	}
 	
@@ -44,6 +47,9 @@ public class ProjectService {
 	 * @param projectEntity Project to be deleted
 	 */
 	public void deleteProject(ProjectEntity projectEntity) {
+		if (securityService.hasNoProjectPermission(projectEntity)) {
+			throw new IllegalArgumentException("You do not have permission to delete this project");
+		}
 		projectRepository.delete(projectEntity);
 	}
 	
@@ -56,10 +62,18 @@ public class ProjectService {
 	}
 	
 	public ProjectEntity findById(Long id) {
-		return projectRepository.findById(id).orElse(null);
+		ProjectEntity project = projectRepository.findById(id).orElse(null);
+		if (securityService.hasNoProjectPermission(project)) {
+			throw new IllegalArgumentException("You do not have permission to view this project");
+		}
+		return project;
 	}
 	
 	public boolean inviteMember(ProjectEntity project, String email) throws IllegalArgumentException {
+		if (securityService.hasNoProjectPermission(project)) {
+			throw new IllegalArgumentException("You do not have permission to invite members to this project");
+		}
+		
 		UserEntity user = userService.findByEmail(email);
 		if (user == null) {
 			throw new IllegalArgumentException("There is no user with that email address");
@@ -83,10 +97,16 @@ public class ProjectService {
 	}
 	
 	public List<UserEntity> getMembers(ProjectEntity project) {
+		if (securityService.hasNoProjectPermission(project)) {
+			throw new IllegalArgumentException("You do not have permission to view members of this project");
+		}
 		return project.getUsers();
 	}
 	
 	public void removeMember(UserEntity member, ProjectEntity project) {
+		if (securityService.hasNoProjectPermission(project)) {
+			throw new IllegalArgumentException("You do not have permission to remove members from this project");
+		}
 		try {
 			project.removeUser(member);
 			projectRepository.save(project);

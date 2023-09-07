@@ -28,7 +28,7 @@ public class AllTasksView extends VerticalLayout {
 		title = new H1("All tasks");
 		refreshButton = new RefreshButton();
 		refreshButton.addClickListener(e -> reloadData());
-		taskList = new TaskList(this.taskService, this.taskService.findAllByAuthUser());
+		taskList = new TaskList(this.taskService, this.taskService.findAllAssignedToAuthUser());
 		
 		div = new Div(refreshButton, title);
 		
@@ -37,7 +37,7 @@ public class AllTasksView extends VerticalLayout {
 	}
 	
 	private void reloadData() {
-		taskList.setTasks(this.taskService.findAllByAuthUser());
+		taskList.setTasks(this.taskService.findAllAssignedToAuthUser());
 	}
 	
 	public void applyStyles(){
