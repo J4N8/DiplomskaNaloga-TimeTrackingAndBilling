@@ -1,5 +1,6 @@
 package me.j4n8.diplomskanaloga.user.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,18 +28,20 @@ public class UserEntity implements UserDetails {
 	@Column(name = "username", nullable = false, unique = true)
 	private String username;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Column(name = "password", nullable = false)
 	private String password;
 	
 	// Link to tasks
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
 	private java.util.List<me.j4n8.diplomskanaloga.task.entities.TaskEntity> tasks;
 	
 	// Link to projects
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
 	private java.util.List<me.j4n8.diplomskanaloga.project.entities.ProjectEntity> projects;
 	
 	@Override

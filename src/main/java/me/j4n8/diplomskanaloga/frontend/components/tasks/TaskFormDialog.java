@@ -142,7 +142,7 @@ public class TaskFormDialog extends Dialog {
 			task.setProject(projectEntity);
 			task.setUser(assigneeComboBox.getValue());
 			binder.writeBean(task);
-			taskService.save(task);
+			taskService.createTask(task);
 			clear();
 			new Notification("Task created successfully", 5 * 1000).open();
 		} catch (Exception e) {

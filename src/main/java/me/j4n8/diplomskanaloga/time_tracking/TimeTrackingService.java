@@ -18,14 +18,14 @@ public class TimeTrackingService {
 	}
 	
 	public void delete(TimeTrackingEntity timeTracking) {
-		if (securityService.hasNoTaskPermission(timeTracking.getTask())) {
+		if (securityService.hasNoTimeTrackingPermission(timeTracking.getTask())) {
 			throw new IllegalArgumentException("You do not have permission to delete this time tracking");
 		}
 		timeTrackingRepository.delete(timeTracking);
 	}
 	
 	public TimeTrackingEntity create(TimeTrackingEntity timeTrackingEntity) {
-		if (securityService.hasNoTaskPermission(timeTrackingEntity.getTask())) {
+		if (securityService.hasNoTimeTrackingPermission(timeTrackingEntity.getTask())) {
 			throw new IllegalArgumentException("You do not have permission to create this time tracking");
 		}
 		return timeTrackingRepository.save(timeTrackingEntity);

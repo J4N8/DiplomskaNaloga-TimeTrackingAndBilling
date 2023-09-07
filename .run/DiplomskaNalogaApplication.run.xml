@@ -1,9 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="DiplomskaNalogaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <envs>
-          <env name="spring.datasource.url" value="jdbc:postgresql://localhost:5432/diplomska_naloga"/>
-          <env name="spring.datasource.username" value="postgres"/>
-          <env name="spring.datasource.password" value="postgres"/>
+          <env name="DATABASE_URL" value="jdbc:postgresql://localhost:5432/diplomska_naloga"/>
+          <env name="DATABASE_USERNAME" value="postgres"/>
+          <env name="DATABASE_PASSWORD" value="postgres"/>
+          <env name="PROFILE" value="dev"/>
       </envs>
     <module name="DiplomskaNaloga" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="me.j4n8.diplomskanaloga.DiplomskaNalogaApplication" />
